@@ -12,6 +12,11 @@ class ThreeBRSSyliusPaymentFeePlugin extends Bundle
 {
     use SyliusPluginTrait;
 
+    public function getPath(): string
+	{
+		return __DIR__;
+	}
+
     public function build(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new DependencyInjection\Compiler\RegisterFeeCalculatorsPass());

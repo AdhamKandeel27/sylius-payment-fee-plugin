@@ -1,0 +1,18 @@
+{% set form = hookable_metadata.context.form %}
+{% set order = hookable_metadata.context.order %}
+
+{{ form_start(form, {
+    method: 'PUT',
+    action: path('sylius_shop_checkout_address'),
+    attr: {
+        'data-controller': 'live',
+        'data-live-submit-method-value': 'PUT'
+    }
+}) }}
+
+    {{ form_errors(form) }}
+
+    {# Let the inner hooks render the individual fields #}
+    {% hook 'sylius_shop.checkout.address.content.form' with { form: form, order: order } %}
+
+{{ form_end(form, { render_rest: false }) }}

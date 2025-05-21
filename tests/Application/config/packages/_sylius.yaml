@@ -1,11 +1,11 @@
 imports:
     - { resource: "@SyliusCoreBundle/Resources/config/app/config.yml" }
-
+    - { resource: "@SyliusPayumBundle/Resources/config/app/config.yaml" }
     - { resource: "@SyliusAdminBundle/Resources/config/app/config.yml" }
-
     - { resource: "@SyliusShopBundle/Resources/config/app/config.yml" }
-
     - { resource: "@SyliusApiBundle/Resources/config/app/config.yaml" }
+
+    - { resource: "@ThreeBRSSyliusPaymentFeePlugin/config/config.yaml" }
 
 parameters:
     sylius_core.public_dir: '%kernel.project_dir%/public'
@@ -22,3 +22,4 @@ sylius_payment:
         payment_method:
             classes:
                 model: Tests\ThreeBRS\SyliusPaymentFeePlugin\Entity\PaymentMethod
+

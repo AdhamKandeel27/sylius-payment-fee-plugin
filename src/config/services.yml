@@ -55,15 +55,15 @@ services:
             $paymentChargesCalculator: '@ThreeBRS\SyliusPaymentFeePlugin\Model\Calculator\DelegatingCalculator'
         tags:
             - name: sylius.order_processor
-              priotiry: 0
+              priority: 0
 
-    threebrs.sylius_payment_fee_plugin.order_processing.order_payment_processor.checkout:
-        class: Sylius\Component\Core\OrderProcessing\OrderPaymentProcessor
-        arguments:
-            - '@sylius.order_payment_provider'
-        tags:
-            - name: sylius.order_processor
-              priotiry: 5
+    #threebrs.sylius_payment_fee_plugin.order_processing.order_payment_processor.checkout:
+        #class: Sylius\Component\Core\OrderProcessing\OrderPaymentProcessor
+        #arguments:
+            #- '@sylius.order_payment_provider'
+        #tags:
+            #- name: sylius.order_processor
+            #  priority: 5
 
     threebrs.sylius_payment_fee_plugin.block_event_listener.admin.layout.javascripts:
         class: Sylius\Bundle\UiBundle\Block\BlockEventListener
@@ -78,26 +78,27 @@ services:
         arguments:
             $calculator: '@sylius.tax_calculator'
             $adjustmentFactory: '@sylius.factory.adjustment'
-            $taxRateResolver: '@sylius.tax_rate_resolver'
+            $taxRateResolver: '@sylius.resolver.tax_rate'
 
     threebrs.taxation.order_items_based_strategy:
         class: Sylius\Bundle\CoreBundle\Taxation\Strategy\TaxCalculationStrategy
-        decorates: sylius.taxation.order_items_based_strategy
+        #decorates: sylius.taxation.order_items_based_strategy
         tags:
             - name: sylius.taxation.calculation_strategy
               type: order_items_based
               label: 'Order items based'
         arguments:
             $type: 'order_items_based'
-            $applicators: ['@sylius.taxation.order_items_taxes_applicator', '@sylius.taxation.order_shipment_taxes_applicator', '@ThreeBRS\SyliusPaymentFeePlugin\Model\Taxation\Applicator\OrderPaymentTaxesApplicator']
+            #$applicators: ['@sylius.applicator.order_item_taxes', '@sylius.taxation.order_shipment_taxes_applicator', '@ThreeBRS\SyliusPaymentFeePlugin\Model\Taxation\Applicator\OrderPaymentTaxesApplicator']
+            $applicators: ['@sylius.applicator.taxation.order_items', '@sylius.applicator.taxation.order_shipment', '@ThreeBRS\SyliusPaymentFeePlugin\Model\Taxation\Applicator\OrderPaymentTaxesApplicator']
 
     threebrs.taxation.order_item_units_based_strategy:
         class: Sylius\Bundle\CoreBundle\Taxation\Strategy\TaxCalculationStrategy
-        decorates: sylius.taxation.order_item_units_based_strategy
+        #decorates: sylius.taxation.order_item_units_based_strategy
         tags:
             - name: sylius.taxation.calculation_strategy
               type: order_item_units_based
               label: 'Order item units based'
         arguments:
             $type: order_item_units_based
-            $applicators: ['@sylius.taxation.order_item_units_taxes_applicator', '@sylius.taxation.order_shipment_taxes_applicator', '@ThreeBRS\SyliusPaymentFeePlugin\Model\Taxation\Applicator\OrderPaymentTaxesApplicator']
+            $applicators: ['@sylius.applicator.taxation.order_item_units', '@sylius.applicator.taxation.order_shipment', '@ThreeBRS\SyliusPaymentFeePlugin\Model\Taxation\Applicator\OrderPaymentTaxesApplicator']

@@ -24,6 +24,17 @@ recreate_db:
 	APP_ENV=test tests/Application/bin/console doctrine:database:create
 	APP_ENV=test tests/Application/bin/console doctrine:schema:update --force --complete --no-interaction
 
+var:
+	rm -fr tests/Application/var
+	mkdir -p tests/Application/var/cache
+	mkdir -p tests/Application/var/log
+	touch tests/Application/var/log/test.log
+	chmod -R 777 tests/Application/var
+	mkdir -p tests/Application/var/cache/profiler
+	chmod -R 777 tests/Application/var
+
+
+
 fixtures:
 	@make recreate_db
 	APP_ENV=test tests/Application/bin/console sylius:fixtures:load default --no-interaction
@@ -31,7 +42,7 @@ fixtures:
 lint:
 	APP_ENV=test bin/symfony-lint.sh
 
-init: install backend frontend
+init: install backend frontend fixtures var
 
 tests: phpstan ecs lint
 
