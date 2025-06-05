@@ -1,9 +1,14 @@
 sylius_twig_hooks:
     hooks:
-        'sylius_shop.checkout.address.content':
-            custom_cart:
-                template: '@ThreeBRSSyliusPaymentFeePlugin/shop/Checkout/SelectPayment/address/_form_override.html.twig'
+        'sylius_shop.checkout.common.sidebar.summary.total':
+            payment_charges:
+                template: '@ThreeBRSSyliusPaymentFeePlugin/shop/Common/Order/Table/_payment.html.twig'
                 priority: 100
 
+        'sylius_shop.checkout.select_payment.content.form.select_payment.payment.choice.details':
+            payment_fee:
+                template: '@ThreeBRSSyliusPaymentFeePlugin/shop/Checkout/SelectPayment/_choice.html.twig'
+                priority: 100        
+  
 
 

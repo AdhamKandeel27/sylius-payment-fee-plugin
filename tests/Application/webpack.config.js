@@ -34,13 +34,20 @@ Encore
     .setOutputPath('public/build/app/admin')
     .setPublicPath('/build/app/admin')
     .addEntry('app-admin-entry', './assets/admin/entrypoint.js')
+    .addEntry('threebrs-payment-fee-admin', './assets/payment-fee/admin-entry.js') 
     .disableSingleRuntimeChunk()
     .cleanupOutputBeforeBuild()
     .enableSourceMaps(!Encore.isProduction())
     .enableVersioning(Encore.isProduction())
-    .enableSassLoader();
+    .enableSassLoader()
+
 
 const appAdminConfig = Encore.getWebpackConfig();
+
+appAdminConfig.resolve.alias = {
+    ...(appAdminConfig.resolve.alias || {}),
+    '@symfony/stimulus-bridge/controllers.json': path.resolve(__dirname, 'assets/controllers.json'),
+};
 
 appAdminConfig.externals = Object.assign({}, appAdminConfig.externals, { window: 'window', document: 'document' });
 appAdminConfig.name = 'app.admin';

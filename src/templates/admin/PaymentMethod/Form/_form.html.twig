@@ -1,21 +1,25 @@
 {% set form = hookable_metadata.context.form %}
-<div class="card p-4 mb-4">
-    <h4 class="mb-3 border-bottom pb-2">{{ 'sylius.ui.taxes'|trans }}</h4>
+{{ dump(form) }}
+
+<div class="card card-body border mb-4">
+    <h4 class="h5">{{ 'sylius.ui.taxes'|trans }}</h4>
     {{ form_row(form.taxCategory) }}
 
-    <h4 class="mt-4 mb-3 border-bottom pb-2">{{ 'threebrs.ui.payment_charges'|trans }}</h4>
+    <h4 class="h5 mt-4">{{ 'threebrs.ui.payment_charges'|trans }}</h4>
     {{ form_row(form.calculator) }}
 
-    {# Prototypes for JS dynamic tabs #}
-        {% for name, calculatorConfigurationPrototype in form.vars.prototypes %}
-            <div id="{{ form.calculator.vars.id }}_{{ name }}"
-                 data-container=".calculatorConfiguration"
-                 data-prototype="{{ form_widget(calculatorConfigurationPrototype)|e('html_attr') }}">
-            </div>
-        {% endfor %}
+    {% for name, prototype in form.vars.prototypes %}
+        <div id="{{ form.calculator.vars.id }}_{{ name }}"
+             data-container=".calculatorConfiguration"
+             data-prototype="{{ form_widget(prototype)|e }}">
+             This is just for testsing the name of the id of div
+        </div>
+    {% endfor %}
 
-
-    <div class="card mt-3 p-3 calculatorConfiguration">
+    <div class="calculatorConfiguration"
+         data-controller="prototype"
+         data-prototype-prefix-value="sylius_payment_method_calculator_calculators"
+         data-container-selector-value=".calculatorConfiguration">
         {% if form.calculatorConfiguration is defined %}
             {% for field in form.calculatorConfiguration %}
                 {{ form_row(field) }}
@@ -23,6 +27,3 @@
         {% endif %}
     </div>
 </div>
-
-
-

@@ -7,10 +7,10 @@ sylius_twig_hooks:
 
         'sylius_admin.base#javascripts':
             custom_scripts:
-                template: '@ThreeBRSSyliusPaymentFeePlugin/admin/shared/layout/base/scripts.html.twig'
+                template: '@ThreeBRSSyliusPaymentFeePlugin/admin/_javascripts.html.twig'
                 priority: -100
 
         sylius_admin.payment_method.create.content.form.sections:
             taxes:
                 template: '@ThreeBRSSyliusPaymentFeePlugin/admin/PaymentMethod/Form/_form.html.twig'
-                priority: 150 # Between general (200) and gateway_config (100)
+                priority: 150 

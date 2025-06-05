@@ -42,7 +42,7 @@ fixtures:
 lint:
 	APP_ENV=test bin/symfony-lint.sh
 
-init: install backend frontend fixtures var
+init: install backend frontend
 
 tests: phpstan ecs lint
 
