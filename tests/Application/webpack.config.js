@@ -6,6 +6,7 @@ const SyliusShop = require('@sylius-ui/shop');
 
 // Admin config
 const adminConfig = SyliusAdmin.getWebpackConfig(path.resolve(__dirname));
+
 // Shop config
 const shopConfig = SyliusShop.getWebpackConfig(path.resolve(__dirname));
 
@@ -26,7 +27,6 @@ const appShopConfig = Encore.getWebpackConfig();
 appShopConfig.externals = Object.assign({}, appShopConfig.externals, { window: 'window', document: 'document' });
 appShopConfig.name = 'app.shop';
 
-
 Encore.reset();
 
 // App admin config
@@ -34,20 +34,15 @@ Encore
     .setOutputPath('public/build/app/admin')
     .setPublicPath('/build/app/admin')
     .addEntry('app-admin-entry', './assets/admin/entrypoint.js')
-    .addEntry('threebrs-payment-fee-admin', './assets/payment-fee/admin-entry.js') 
+    .addEntry('payment-fee-admin', '../../src/Resources/public/admin/js/payment-fee.js')  
+
     .disableSingleRuntimeChunk()
     .cleanupOutputBeforeBuild()
     .enableSourceMaps(!Encore.isProduction())
     .enableVersioning(Encore.isProduction())
-    .enableSassLoader()
-
+    .enableSassLoader();
 
 const appAdminConfig = Encore.getWebpackConfig();
-
-appAdminConfig.resolve.alias = {
-    ...(appAdminConfig.resolve.alias || {}),
-    '@symfony/stimulus-bridge/controllers.json': path.resolve(__dirname, 'assets/controllers.json'),
-};
 
 appAdminConfig.externals = Object.assign({}, appAdminConfig.externals, { window: 'window', document: 'document' });
 appAdminConfig.name = 'app.admin';
